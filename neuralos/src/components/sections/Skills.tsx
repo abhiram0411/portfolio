@@ -129,14 +129,14 @@ export default function Skills() {
     <section
       ref={ref}
       id="skills"
-      className="relative min-h-[300vh] px-6 sm:px-12 lg:px-16 py-20 pointer-events-none"
+      className="relative min-h-[500vh] px-6 sm:px-12 lg:px-16 py-20 pointer-events-none"
     >
       {/* Sticky HUD during Skill Exploration */}
-      <div className="sticky top-24 sm:top-28 left-0 w-full max-w-full md:max-w-[45vw] lg:max-w-[36vw] text-left pointer-events-auto flex flex-col gap-6">
+      <div className="sticky top-28 sm:top-32 left-0 z-30 w-full max-w-full md:max-w-[45vw] lg:max-w-[36vw] text-left pointer-events-auto flex flex-col gap-6">
         <FadeIn>
           <div>
             <h3 className="font-mono text-[10px] tracking-[0.4em] text-[#6b5e50] uppercase mb-2">
-              Plate III. // Cognitive Capabilities
+              Cognitive Capabilities
             </h3>
             <h2 className="font-serif text-3xl sm:text-4xl font-light text-[#1a1815] uppercase tracking-tight">
               Engineering Expertise
@@ -148,8 +148,8 @@ export default function Skills() {
         </FadeIn>
 
         {/* Dynamic HUD indicator updated live by NeuralCanvas */}
-        <div className="p-6 border border-[#1a1815]/20 bg-[#f5edde]/80 backdrop-blur-md space-y-4 transition-all duration-500 shadow-sm">
-          <div className="flex justify-between items-center border-b border-[#1a1815]/10 pb-2">
+        <div className="p-6 border border-[#1a1815]/25 bg-[#f5edde]/90 backdrop-blur-md space-y-4 transition-all duration-500 shadow-md">
+          <div className="flex justify-between items-center border-b border-[#1a1815]/15 pb-2">
             <span className="font-mono text-[9px] tracking-[0.3em] text-[#a87d2a] uppercase font-bold" id="hud-category">
               CORE ARCHITECTURE
             </span>
@@ -161,17 +161,17 @@ export default function Skills() {
             <h4 className="font-serif text-2xl font-normal text-[#1a1815] transition-all" id="hud-title">
               Full Stack Development
             </h4>
-            <p className="font-serif text-xs text-[#3a3229]/80 leading-relaxed pt-2 transition-all" id="hud-detail">
+            <p className="font-serif text-xs text-[#3a3229]/90 leading-relaxed pt-2 transition-all" id="hud-detail">
               End-to-end web architecture combining scalable React/Next.js frontends with robust Node.js microservices and REST API integrations.
             </p>
           </div>
-          <div className="w-full bg-[#1a1815]/10 h-1 rounded-full overflow-hidden mt-2">
+          <div className="w-full bg-[#1a1815]/15 h-1 rounded-full overflow-hidden mt-2">
             <div className="bg-[#a87d2a] h-full transition-all duration-300 w-[5%]" id="hud-progress" />
           </div>
         </div>
       </div>
 
-      <div className="h-[250vh]" />
+      <div className="h-[450vh]" />
     </section>
   );
 }

@@ -33,7 +33,7 @@ export default function Education() {
         <FadeIn>
           <div>
             <h3 className="font-mono text-[10px] tracking-[0.4em] text-[#6b5e50] uppercase mb-4">
-              Plate VII. // Academic Foundations
+              Academic Foundations
             </h3>
             <h2 className="font-serif text-3xl sm:text-4xl font-light text-[#1a1815] uppercase tracking-tight">
               Education & Academic Record

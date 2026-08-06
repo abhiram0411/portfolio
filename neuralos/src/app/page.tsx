@@ -60,7 +60,7 @@ export default function Home() {
 
       {/* Scrollable DOM Sections */}
       <main
-        className={`relative overflow-x-hidden min-h-screen transition-opacity duration-1000 ${
+        className={`relative overflow-x-clip min-h-screen transition-opacity duration-1000 ${
           isLoaded ? "opacity-100" : "opacity-0"
         }`}
       >

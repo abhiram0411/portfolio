@@ -28,30 +28,13 @@ export default function About() {
       <div className="w-full max-w-full md:max-w-[50vw] lg:max-w-[38vw] text-left flex flex-col gap-10 pointer-events-auto">
         
         <FadeIn delay={100}>
-          <div className="flex items-center gap-6 group">
-            <div>
-              <h3 className="font-mono text-[10px] tracking-[0.3em] text-[#6b5e50] uppercase mb-1">
-                Name
-              </h3>
-              <h1 className="font-serif text-3xl sm:text-4xl text-[#1a1815] uppercase tracking-tight leading-none">
-                {profile.name}
-              </h1>
-            </div>
-            <div className="flex-1 h-[1px] bg-[#1a1815]/20 hidden lg:block group-hover:bg-[#1a1815]/50 transition-colors" />
-          </div>
-        </FadeIn>
-
-        <FadeIn delay={200}>
-          <div className="flex items-center gap-6 group">
-            <div>
-              <h3 className="font-mono text-[10px] tracking-[0.3em] text-[#6b5e50] uppercase mb-1">
-                Role
-              </h3>
-              <p className="font-serif text-xl sm:text-2xl text-[#2a241e]">
-                Software Engineer
-              </p>
-            </div>
-            <div className="flex-1 h-[1px] bg-[#1a1815]/20 hidden lg:block group-hover:bg-[#1a1815]/50 transition-colors" />
+          <div className="border-b border-[#1a1815]/15 pb-6">
+            <h3 className="font-mono text-[10px] tracking-[0.3em] text-[#6b5e50] uppercase mb-2">
+              Biography & System Focus
+            </h3>
+            <h2 className="font-serif text-3xl sm:text-4xl font-light text-[#1a1815] uppercase tracking-tight">
+              About The Engineer
+            </h2>
           </div>
         </FadeIn>
 

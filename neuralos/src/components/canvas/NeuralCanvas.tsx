@@ -150,68 +150,15 @@ function AnchorTracker({ id, position, modelRef }: { id: string; position: reado
 // 2D SVG OVERLAY FOR THE ACTIVE SKILL ANNOTATION
 // ─────────────────────────────────────────────────────────────────────────────
 function AtlasOverlay() {
-  useEffect(() => {
-    let frame: number;
-    const update = () => {
-      const w = window.innerWidth;
-      const h = window.innerHeight;
-      
-      const leftZoneX = Math.max(260, w * 0.22);
-      const rightZoneX = Math.min(w - 260, w * 0.78);
-      
-      const activeIdx = annotationStore.activeSkillIndex;
-      
-      SKILLS_20.forEach((skill, idx) => {
-        const path = document.getElementById(`ann-path-${skill.id}`);
-        const text = document.getElementById(`ann-text-${skill.id}`);
-        
-        if (!path || !text) return;
-
-        // ONLY render the ONE active skill during Skill Exploration
-        if (activeIdx < 0 || idx !== activeIdx) {
-          path.style.opacity = '0';
-          text.style.opacity = '0';
-          return;
-        }
-
-        const data = annotationStore.anchors[skill.id];
-        if (!data || !data.visible) {
-          path.style.opacity = '0';
-          text.style.opacity = '0';
-          return;
-        }
-
-        path.style.opacity = '0.85';
-        text.style.opacity = '1';
-
-        const textX = skill.dir === 'left' ? leftZoneX : rightZoneX;
-        const textY = data.y;
-        const midX = data.x + (textX - data.x) * 0.45;
-
-        path.setAttribute('d', `M ${data.x} ${data.y} L ${midX} ${textY} L ${textX} ${textY}`);
-
-        if (skill.dir === 'left') {
-          text.style.transform = `translate(${textX - 15 - text.offsetWidth}px, ${textY}px)`;
-        } else {
-          text.style.transform = `translate(${textX + 15}px, ${textY}px)`;
-        }
-      });
-      
-      frame = requestAnimationFrame(update);
-    };
-    update();
-    return () => cancelAnimationFrame(frame);
-  }, []);
-
   return (
     <div className="fixed inset-0 pointer-events-none z-40" id="atlas-overlay">
       <svg className="w-full h-full absolute inset-0">
         {SKILLS_20.map(lbl => (
-           <path key={lbl.id} id={`ann-path-${lbl.id}`} fill="none" stroke="#1a1815" strokeWidth="0.9" className="transition-opacity duration-500 opacity-0" />
+           <path key={lbl.id} id={`ann-path-${lbl.id}`} fill="none" stroke="#1a1815" strokeWidth="0.9" className="transition-opacity duration-300 opacity-0" />
         ))}
       </svg>
       {SKILLS_20.map(lbl => (
-         <div key={lbl.id} id={`ann-text-${lbl.id}`} className="absolute left-0 top-0 flex flex-col gap-0.5 -translate-y-1/2 transition-opacity duration-500 opacity-0">
+         <div key={lbl.id} id={`ann-text-${lbl.id}`} className="absolute left-0 top-0 flex flex-col items-end text-right gap-0.5 -translate-y-1/2 transition-opacity duration-300 opacity-0 whitespace-nowrap">
            <span className="font-mono text-[8px] tracking-[0.3em] text-[#a87d2a] uppercase font-bold">
              SKILL {lbl.id.replace('sk-', '').padStart(2, '0')} // {lbl.category}
            </span>
@@ -313,9 +260,18 @@ function NervousSystemModel() {
     });
   }, [scene]);
 
-  useFrame(({ clock, pointer }) => {
+  const scaleProgress = useRef(0);
+
+  useFrame(({ clock, pointer }, delta) => {
     if (!ref.current) return;
     const t = clock.getElapsedTime();
+
+    // Initial entrance fade-in animation for 3D brain
+    if (scaleProgress.current < 1) {
+      scaleProgress.current = Math.min(1, scaleProgress.current + delta * 1.5);
+      const s = THREE.MathUtils.lerp(0.2, 1, scaleProgress.current);
+      ref.current.scale.setScalar(s);
+    }
 
     targetRotY.current += (pointer.x * 0.35 - targetRotY.current) * 0.045;
     ref.current.rotation.y = targetRotY.current;
@@ -337,34 +293,93 @@ function NervousSystemModel() {
 // CINEMATIC CAMERA RIG (Skills Exploration + Portfolio Chapters)
 // ─────────────────────────────────────────────────────────────────────────────
 function CameraRig() {
-  const { camera } = useThree();
+  const { camera, size } = useThree();
+  const currentPos = useRef(new THREE.Vector3(-1.2, 0.0, 7.5));
+  const currentLook = useRef(new THREE.Vector3(0.0, 0.0, 0.0));
+  const lastActiveIdx = useRef(-1);
+
+  const boundsRef = useRef({
+    hero: { top: 0, height: 0 },
+    about: { top: 0, height: 0 },
+    skills: { top: 0, height: 0 },
+    projects: { top: 0, height: 0 },
+    certs: { top: 0, height: 0 },
+    edu: { top: 0, height: 0 },
+    contact: { top: 0, height: 0 },
+  });
+
+  useEffect(() => {
+    const updateBounds = () => {
+      const getB = (id: string) => {
+        const el = document.getElementById(id);
+        if (!el) return { top: 0, height: 0 };
+        const rect = el.getBoundingClientRect();
+        const scrollY = window.scrollY || document.documentElement.scrollTop;
+        return { top: rect.top + scrollY, height: rect.height };
+      };
+      boundsRef.current = {
+        hero: getB("hero"),
+        about: getB("about"),
+        skills: getB("skills"),
+        projects: getB("projects"),
+        certs: getB("certifications"),
+        edu: getB("education"),
+        contact: getB("contact"),
+      };
+    };
+
+    updateBounds();
+    window.addEventListener("resize", updateBounds, { passive: true });
+    window.addEventListener("scroll", updateBounds, { passive: true });
+    return () => {
+      window.removeEventListener("resize", updateBounds);
+      window.removeEventListener("scroll", updateBounds);
+    };
+  }, []);
 
   useFrame(() => {
-    let targetPos = new THREE.Vector3(-1.2, 0.0, 7.5);
+    const scrollY = window.scrollY || document.documentElement.scrollTop;
+    const viewH = size.height || window.innerHeight;
+    const viewW = size.width || window.innerWidth;
+
+    let targetPos = new THREE.Vector3(0.0, 0.2, 5.2);
     let targetLook = new THREE.Vector3(0.0, 0.0, 0.0);
 
-    const skillsEl = document.getElementById("skills");
-    const projectsEl = document.getElementById("projects");
-    const certsEl = document.getElementById("certifications");
-    const eduEl = document.getElementById("education");
+    const { hero, about, skills, projects, certs, edu, contact } = boundsRef.current;
 
-    const viewH = window.innerHeight;
+    const skillsRectTop = skills.top - scrollY;
+    const skillsRectBottom = skillsRectTop + skills.height;
 
-    if (skillsEl) {
-      const rect = skillsEl.getBoundingClientRect();
-      const totalDist = rect.height - viewH;
+    // SKILL EXPLORATION ACTIVE CONDITION
+    const isSkillsActive = skills.height > 0 && skillsRectTop <= 200 && skillsRectBottom >= viewH * 0.15;
 
-      if (rect.top <= viewH && rect.bottom >= 0) {
-        // SKILL EXPLORATION SEQUENCE (0 to 19)
-        const progress = totalDist > 0 ? Math.min(1, Math.max(0, -rect.top / totalDist)) : 0;
-        const idx = Math.min(19, Math.max(0, Math.floor(progress * 20)));
-        annotationStore.activeSkillIndex = idx;
+    if (isSkillsActive) {
+      const scrollableDistance = skills.height - viewH;
+      const currentScroll = Math.max(0, -skillsRectTop);
+      const progress = scrollableDistance > 0 ? Math.min(1, Math.max(0, currentScroll / scrollableDistance)) : 0;
+      const idx = Math.min(19, Math.max(0, Math.floor(progress * 20)));
 
-        const activeSkill = SKILLS_20[idx];
-        targetPos.fromArray(activeSkill.camera);
-        targetLook.fromArray(activeSkill.look);
+      annotationStore.activeSkillIndex = idx;
+      const activeSkill = SKILLS_20[idx];
 
-        // Update HUD elements
+      // 180-degree horizontal rotation sweep across 20 skills (-80deg to +80deg)
+      const angle = -Math.PI * 0.44 + progress * (Math.PI * 0.88);
+      const radius = 2.8; // Close magnifying-glass perspective focused on brain details
+
+      // Dynamic vertical and elevation angle shift per skill
+      const yOffset = (activeSkill.camera[1] || 0) * 0.3 + Math.sin(idx * 0.85) * 0.25;
+
+      targetPos.set(
+        Math.sin(angle) * radius,
+        yOffset,
+        Math.cos(angle) * radius
+      );
+      targetLook.set(0.0, 0.05, 0.0);
+
+      // DOM HUD update ONLY on index change
+      if (idx !== lastActiveIdx.current) {
+        lastActiveIdx.current = idx;
+
         const catEl = document.getElementById("hud-category");
         const cntEl = document.getElementById("hud-counter");
         const ttlEl = document.getElementById("hud-title");
@@ -400,26 +415,98 @@ function CameraRig() {
           dtlEl.textContent = details[activeSkill.name] || "";
         }
         if (prgEl) prgEl.style.width = `${((idx + 1) / 20) * 100}%`;
+      }
+    } else {
+      // OUTSIDE SKILLS SECTION — Hide skill annotations
+      annotationStore.activeSkillIndex = -1;
+      if (lastActiveIdx.current !== -1) {
+        lastActiveIdx.current = -1;
+        SKILLS_20.forEach((skill) => {
+          const path = document.getElementById(`ann-path-${skill.id}`);
+          const text = document.getElementById(`ann-text-${skill.id}`);
+          if (path) path.style.opacity = "0";
+          if (text) text.style.opacity = "0";
+        });
+      }
 
-        camera.position.lerp(targetPos, 0.05);
-        camera.lookAt(targetLook);
-        return;
+      // Continuous camera animation for all other sections across the page
+      const aboutTop = about.top - scrollY;
+      const projectsTop = projects.top - scrollY;
+      const certsTop = certs.top - scrollY;
+      const eduTop = edu.top - scrollY;
+      const contactTop = contact.top - scrollY;
+
+      if (contactTop < viewH * 0.7) {
+        // Contact section (exiting page)
+        targetPos.set(0.0, 0.4, 5.5);
+        targetLook.set(0.0, 0.0, 0.0);
+      } else if (eduTop < viewH * 0.7) {
+        // Education section
+        targetPos.set(0.0, -0.5, 4.8);
+        targetLook.set(0.0, 0.15, 0.0);
+      } else if (certsTop < viewH * 0.7) {
+        // Certifications section
+        targetPos.set(-1.2, 1.2, 5.0);
+        targetLook.set(0.0, 0.1, 0.0);
+      } else if (projectsTop < viewH * 0.7) {
+        // Projects section
+        targetPos.set(1.6, 0.4, 5.2);
+        targetLook.set(0.0, 0.0, 0.0);
+      } else if (aboutTop < viewH * 0.7) {
+        // About section
+        targetPos.set(-1.4, 0.5, 5.0);
+        targetLook.set(0.0, 0.1, 0.0);
+      } else {
+        // Hero opening section
+        targetPos.set(0.0, 0.2, 5.2);
+        targetLook.set(0.0, 0.0, 0.0);
       }
     }
 
-    // OUTSIDE SKILLS SECTION: Hide annotations & trigger chapter overview framing
-    annotationStore.activeSkillIndex = -1;
+    // Smooth camera position and lookAt interpolation (prevents camera jittering)
+    currentPos.current.lerp(targetPos, 0.06);
+    currentLook.current.lerp(targetLook, 0.06);
+    camera.position.copy(currentPos.current);
+    camera.lookAt(currentLook.current);
 
-    if (projectsEl && projectsEl.getBoundingClientRect().top < viewH * 0.7 && projectsEl.getBoundingClientRect().bottom > 0) {
-      targetPos.set(1.4, 0.2, 6.5);
-    } else if (certsEl && certsEl.getBoundingClientRect().top < viewH * 0.7 && certsEl.getBoundingClientRect().bottom > 0) {
-      targetPos.set(-0.8, 1.6, 6.5);
-    } else if (eduEl && eduEl.getBoundingClientRect().top < viewH * 0.7 && eduEl.getBoundingClientRect().bottom > 0) {
-      targetPos.set(-1.0, 0.0, 6.8);
-    }
+    // Frame-synced overlay rendering
+    const activeIdx = annotationStore.activeSkillIndex;
+    SKILLS_20.forEach((skill, idx) => {
+      const path = document.getElementById(`ann-path-${skill.id}`);
+      const text = document.getElementById(`ann-text-${skill.id}`);
+      if (!path || !text) return;
 
-    camera.position.lerp(targetPos, 0.05);
-    camera.lookAt(targetLook);
+      if (activeIdx < 0 || idx !== activeIdx) {
+        path.style.opacity = "0";
+        text.style.opacity = "0";
+        return;
+      }
+
+      const data = annotationStore.anchors[skill.id];
+      if (!data || !data.visible) {
+        path.style.opacity = "0";
+        text.style.opacity = "0";
+        return;
+      }
+
+      path.style.opacity = "0.85";
+      text.style.opacity = "1";
+
+      // Always place annotation labels on the far-right side of the viewport
+      // to avoid collision with the left-side HUD card and center brain model.
+      const labelRightMargin = 28;
+      const textW = text.offsetWidth || 200;
+      const labelRightEdge = viewW - labelRightMargin;
+      const labelLeftEdge = labelRightEdge - textW;
+      const textY = Math.max(80, Math.min(data.y, viewH - 80));
+
+      // Leader line: brain anchor → midpoint → left edge of label
+      const midX = data.x + (labelLeftEdge - data.x) * 0.5;
+      path.setAttribute("d", `M ${data.x} ${data.y} L ${midX} ${textY} L ${labelLeftEdge - 8} ${textY}`);
+
+      // Position the div so its right edge sits at labelRightEdge
+      text.style.transform = `translate(${labelLeftEdge}px, ${textY}px)`;
+    });
   });
 
   return null;
@@ -478,3 +565,4 @@ export default function NeuralCanvas() {
     </>
   );
 }
+
