@@ -1,0 +1,4 @@
+.freebuff
+node_modules
+.next
+*.log
