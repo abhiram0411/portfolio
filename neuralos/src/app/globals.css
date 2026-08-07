@@ -37,6 +37,12 @@ html.lenis, html.lenis body {
   pointer-events: none;
 }
 
+html, body {
+  overflow-x: clip;
+  max-width: 100vw;
+  -webkit-tap-highlight-color: transparent;
+}
+
 body {
   background-color: #e7d5b5;
   background-image: 

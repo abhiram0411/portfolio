@@ -341,8 +341,9 @@ function CameraRig() {
     const scrollY = window.scrollY || document.documentElement.scrollTop;
     const viewH = size.height || window.innerHeight;
     const viewW = size.width || window.innerWidth;
+    const isMobile = viewW < 768;
 
-    let targetPos = new THREE.Vector3(0.0, 0.2, 5.2);
+    let targetPos = isMobile ? new THREE.Vector3(0.0, 0.6, 6.6) : new THREE.Vector3(0.0, 0.2, 5.2);
     let targetLook = new THREE.Vector3(0.0, 0.0, 0.0);
 
     const { hero, about, skills, projects, certs, edu, contact } = boundsRef.current;
@@ -353,7 +354,13 @@ function CameraRig() {
     // SKILL EXPLORATION ACTIVE CONDITION
     const isSkillsActive = skills.height > 0 && skillsRectTop <= 200 && skillsRectBottom >= viewH * 0.15;
 
+    const hudContainer = document.getElementById("skills-hud-container");
+
     if (isSkillsActive) {
+      if (hudContainer && hudContainer.getAttribute("data-active") !== "true") {
+        hudContainer.setAttribute("data-active", "true");
+      }
+
       const scrollableDistance = skills.height - viewH;
       const currentScroll = Math.max(0, -skillsRectTop);
       const progress = scrollableDistance > 0 ? Math.min(1, Math.max(0, currentScroll / scrollableDistance)) : 0;
@@ -364,17 +371,19 @@ function CameraRig() {
 
       // 180-degree horizontal rotation sweep across 20 skills (-80deg to +80deg)
       const angle = -Math.PI * 0.44 + progress * (Math.PI * 0.88);
-      const radius = 2.8; // Close magnifying-glass perspective focused on brain details
+      const radius = isMobile ? 3.4 : 2.8;
 
       // Dynamic vertical and elevation angle shift per skill
-      const yOffset = (activeSkill.camera[1] || 0) * 0.3 + Math.sin(idx * 0.85) * 0.25;
+      const yOffset = isMobile
+        ? 0.5 + (activeSkill.camera[1] || 0) * 0.2
+        : (activeSkill.camera[1] || 0) * 0.3 + Math.sin(idx * 0.85) * 0.25;
 
       targetPos.set(
         Math.sin(angle) * radius,
         yOffset,
         Math.cos(angle) * radius
       );
-      targetLook.set(0.0, 0.05, 0.0);
+      targetLook.set(0.0, isMobile ? 0.3 : 0.05, 0.0);
 
       // DOM HUD update ONLY on index change
       if (idx !== lastActiveIdx.current) {
@@ -417,6 +426,10 @@ function CameraRig() {
         if (prgEl) prgEl.style.width = `${((idx + 1) / 20) * 100}%`;
       }
     } else {
+      if (hudContainer && hudContainer.getAttribute("data-active") !== "false") {
+        hudContainer.setAttribute("data-active", "false");
+      }
+
       // OUTSIDE SKILLS SECTION — Hide skill annotations
       annotationStore.activeSkillIndex = -1;
       if (lastActiveIdx.current !== -1) {
@@ -438,27 +451,27 @@ function CameraRig() {
 
       if (contactTop < viewH * 0.7) {
         // Contact section (exiting page)
-        targetPos.set(0.0, 0.4, 5.5);
+        targetPos.set(0.0, isMobile ? 0.6 : 0.4, isMobile ? 6.5 : 5.5);
         targetLook.set(0.0, 0.0, 0.0);
       } else if (eduTop < viewH * 0.7) {
         // Education section
-        targetPos.set(0.0, -0.5, 4.8);
+        targetPos.set(0.0, isMobile ? 0.4 : -0.5, isMobile ? 6.4 : 4.8);
         targetLook.set(0.0, 0.15, 0.0);
       } else if (certsTop < viewH * 0.7) {
         // Certifications section
-        targetPos.set(-1.2, 1.2, 5.0);
+        targetPos.set(isMobile ? 0.0 : -1.2, isMobile ? 0.7 : 1.2, isMobile ? 6.4 : 5.0);
         targetLook.set(0.0, 0.1, 0.0);
       } else if (projectsTop < viewH * 0.7) {
         // Projects section
-        targetPos.set(1.6, 0.4, 5.2);
+        targetPos.set(isMobile ? 0.0 : 1.6, isMobile ? 0.6 : 0.4, isMobile ? 6.5 : 5.2);
         targetLook.set(0.0, 0.0, 0.0);
       } else if (aboutTop < viewH * 0.7) {
         // About section
-        targetPos.set(-1.4, 0.5, 5.0);
+        targetPos.set(isMobile ? 0.0 : -1.4, isMobile ? 0.7 : 0.5, isMobile ? 6.4 : 5.0);
         targetLook.set(0.0, 0.1, 0.0);
       } else {
         // Hero opening section
-        targetPos.set(0.0, 0.2, 5.2);
+        targetPos.set(0.0, isMobile ? 0.5 : 0.2, isMobile ? 6.6 : 5.2);
         targetLook.set(0.0, 0.0, 0.0);
       }
     }
@@ -489,22 +502,20 @@ function CameraRig() {
         return;
       }
 
-      path.style.opacity = "0.85";
-      text.style.opacity = "1";
+      path.style.opacity = isMobile ? "0" : "0.85";
+      text.style.opacity = isMobile ? "0" : "1";
 
-      // Always place annotation labels on the far-right side of the viewport
-      // to avoid collision with the left-side HUD card and center brain model.
-      const labelRightMargin = 28;
-      const textW = text.offsetWidth || 200;
+      // On mobile screens, keep label safely bounded within screen horizontal margins
+      const labelRightMargin = isMobile ? 16 : 28;
+      const textW = Math.min(text.offsetWidth || 200, viewW - 32);
       const labelRightEdge = viewW - labelRightMargin;
-      const labelLeftEdge = labelRightEdge - textW;
-      const textY = Math.max(80, Math.min(data.y, viewH - 80));
+      const labelLeftEdge = isMobile ? Math.max(16, labelRightEdge - textW) : labelRightEdge - textW;
+      const textY = Math.max(isMobile ? 90 : 80, Math.min(data.y, viewH - (isMobile ? 120 : 80)));
 
       // Leader line: brain anchor → midpoint → left edge of label
       const midX = data.x + (labelLeftEdge - data.x) * 0.5;
       path.setAttribute("d", `M ${data.x} ${data.y} L ${midX} ${textY} L ${labelLeftEdge - 8} ${textY}`);
 
-      // Position the div so its right edge sits at labelRightEdge
       text.style.transform = `translate(${labelLeftEdge}px, ${textY}px)`;
     });
   });

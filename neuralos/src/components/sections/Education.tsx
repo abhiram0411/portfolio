@@ -27,36 +27,36 @@ export default function Education() {
     <section
       ref={ref}
       id="education"
-      className="relative flex min-h-screen items-center px-6 sm:px-12 lg:px-16 py-32 pointer-events-none"
+      className="relative flex min-h-screen items-center px-4 sm:px-12 lg:px-16 py-20 sm:py-32 pointer-events-none"
     >
-      <div className="w-full max-w-full md:max-w-[50vw] lg:max-w-[38vw] text-left flex flex-col gap-8 pointer-events-auto">
+      <div className="w-full max-w-full md:max-w-[50vw] lg:max-w-[38vw] text-left flex flex-col gap-6 sm:gap-8 pointer-events-auto">
         <FadeIn>
-          <div>
-            <h3 className="font-mono text-[10px] tracking-[0.4em] text-[#6b5e50] uppercase mb-4">
+          <div className="p-4 sm:p-0 rounded-xl bg-[#f5edde]/80 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none border border-[#1a1815]/15 sm:border-none shadow-sm sm:shadow-none">
+            <h3 className="font-mono text-[9px] sm:text-[10px] tracking-[0.3em] sm:tracking-[0.4em] text-[#6b5e50] uppercase mb-2 sm:mb-4">
               Academic Foundations
             </h3>
-            <h2 className="font-serif text-3xl sm:text-4xl font-light text-[#1a1815] uppercase tracking-tight">
+            <h2 className="font-serif text-2xl sm:text-4xl font-light text-[#1a1815] uppercase tracking-tight break-words">
               Education & Academic Record
             </h2>
           </div>
         </FadeIn>
 
         {/* Academic Timeline Cards */}
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-4 sm:gap-6">
           {profile.educationHistory?.map((edu, idx) => (
             <FadeIn key={edu.level} delay={idx * 100}>
-              <div className="p-6 border border-[#1a1815]/20 bg-[#f5edde]/70 backdrop-blur-md space-y-3 shadow-sm hover:border-[#1a1815]/40 transition-all">
+              <div className="p-4 sm:p-6 rounded-xl border border-[#1a1815]/20 bg-[#f5edde]/80 backdrop-blur-md space-y-3 shadow-sm hover:border-[#1a1815]/40 transition-all">
                 <div className="flex justify-between items-start flex-wrap gap-2 border-b border-[#1a1815]/10 pb-3">
                   <div>
                     <span className="font-mono text-[9px] tracking-[0.25em] text-[#a87d2a] uppercase font-bold">
                       {edu.level}
                     </span>
-                    <h3 className="font-serif text-xl font-normal text-[#1a1815] mt-0.5">
+                    <h3 className="font-serif text-lg sm:text-xl font-normal text-[#1a1815] mt-0.5">
                       {edu.degree}
                     </h3>
                   </div>
-                  <div className="text-right">
-                    <span className="font-mono text-[10px] tracking-wider text-[#6b5e50] font-bold">
+                  <div className="text-left sm:text-right">
+                    <span className="font-mono text-[9px] sm:text-[10px] tracking-wider text-[#6b5e50] font-bold">
                       {edu.period}
                     </span>
                     {edu.metrics && (
@@ -68,7 +68,7 @@ export default function Education() {
                 </div>
 
                 <div>
-                  <p className="font-serif text-sm font-medium text-[#1a1815]">
+                  <p className="font-serif text-xs sm:text-sm font-medium text-[#1a1815]">
                     {edu.institution}
                   </p>
                   <p className="font-mono text-[9px] tracking-widest text-[#6b5e50] uppercase mt-0.5">
@@ -86,15 +86,15 @@ export default function Education() {
 
         {/* B.Tech Core Computer Science Modules */}
         <FadeIn delay={300}>
-          <div className="p-6 border border-[#1a1815]/15 bg-[#f5edde]/50 backdrop-blur-sm space-y-3">
-            <h4 className="font-mono text-[10px] tracking-[0.3em] text-[#6b5e50] uppercase">
+          <div className="p-4 sm:p-6 rounded-xl border border-[#1a1815]/15 bg-[#f5edde]/70 backdrop-blur-md space-y-3 shadow-sm">
+            <h4 className="font-mono text-[9px] sm:text-[10px] tracking-[0.3em] text-[#6b5e50] uppercase font-semibold">
               B.TECH CORE COMPUTER SCIENCE MODULES
             </h4>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1.5 sm:gap-2">
               {profile.education.coursework.map((course) => (
                 <span
                   key={course}
-                  className="font-mono text-[9px] text-[#2a241e] bg-[#1a1815]/5 border border-[#1a1815]/15 px-2.5 py-1 rounded"
+                  className="font-mono text-[9px] text-[#2a241e] bg-[#1a1815]/5 border border-[#1a1815]/15 px-2 py-1 rounded"
                 >
                   {course}
                 </span>

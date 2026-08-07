@@ -1,0 +1,20 @@
+npm notice run neuralos@0.1.0 dev
+npm notice run next dev
+▲ Next.js 16.2.12 (Turbopack)
+- Local:         http://localhost:62987
+- Network:       http://192.168.0.5:62987
+✓ Ready in 517ms
+⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of C:\Users\ABHIRAM\package-lock.json as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * C:\Users\ABHIRAM\Desktop\portfolio\neuralos\package-lock.json
+
+
+ GET / 200 in 488ms (next.js: 173ms, application-code: 315ms)
+ GET / 200 in 49ms (next.js: 4ms, application-code: 45ms)
+ GET / 200 in 45ms (next.js: 2ms, application-code: 43ms)
+[browser] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[browser] THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.
+[browser] THREE.WebGLShadowMap: PCFSoftShadowMap has been deprecated. Using PCFShadowMap instead.
