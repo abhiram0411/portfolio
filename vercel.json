@@ -1,5 +1,0 @@
-{
-  "buildCommand": "cd neuralos && npm run build",
-  "outputDirectory": "neuralos/.next",
-  "installCommand": "cd neuralos && npm install"
-}
