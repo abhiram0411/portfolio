@@ -14,26 +14,26 @@ useGLTF.preload(MODEL_PATH);
 // 20 SKILLS STORYTELLING DATA
 // ─────────────────────────────────────────────────────────────────────────────
 export const SKILLS_20 = [
-  { id: 'sk-1',  name: 'Full Stack Development',    region: 'Prefrontal Cortex',    category: 'Core Architecture',    local: [0.0, 0.6, 0.8], camera: [-1.2, 0.4, 4.8], look: [0, 0.4, 0], dir: 'left' },
-  { id: 'sk-2',  name: 'Java',                      region: 'Motor Cortex',          category: 'Backend Systems',     local: [-0.5, 0.7, 0.5], camera: [-1.8, 0.6, 4.5], look: [0, 0.5, 0], dir: 'left' },
-  { id: 'sk-3',  name: 'Python',                    region: 'Somatosensory Cortex', category: 'Data & AI',           local: [0.5, 0.7, 0.4], camera: [ 1.8, 0.6, 4.5], look: [0, 0.5, 0], dir: 'right' },
-  { id: 'sk-4',  name: 'JavaScript',                region: 'Broca Area',           category: 'Frontend Engine',     local: [-0.7, 0.2, 0.5], camera: [-2.0, 0.1, 4.2], look: [0, 0.1, 0], dir: 'left' },
-  { id: 'sk-5',  name: 'TypeScript',                region: 'Wernicke Area',        category: 'Type Systems',        local: [0.7, 0.2, 0.4], camera: [ 2.0, 0.2, 4.2], look: [0, 0.2, 0], dir: 'right' },
-  { id: 'sk-6',  name: 'React.js',                  region: 'Premotor Region',       category: 'UI Framework',        local: [-0.5, -0.1, 0.7], camera: [-1.8, -0.2, 4.4], look: [0, -0.1, 0], dir: 'left' },
-  { id: 'sk-7',  name: 'Next.js',                   region: 'Auditory Cortex',      category: 'SSR & Full-Stack',    local: [0.5, -0.1, 0.7], camera: [ 1.8, -0.2, 4.4], look: [0, -0.1, 0], dir: 'right' },
-  { id: 'sk-8',  name: 'HTML5',                     region: 'Parietal Lobe',         category: 'Semantic Markup',     local: [-0.6, 0.5, -0.2], camera: [-2.0, 0.4, 4.8], look: [0, 0.2, 0], dir: 'left' },
-  { id: 'sk-9',  name: 'CSS3',                      region: 'Visual Cortex',         category: 'Styling & Motion',     local: [0.6, 0.5, -0.2], camera: [ 2.0, 0.4, 4.8], look: [0, 0.2, 0], dir: 'right' },
-  { id: 'sk-10', name: 'SQL',                      region: 'Hippocampus',          category: 'Relational Data',     local: [0.0, -0.5, 0.7], camera: [-1.2, -0.6, 4.6], look: [0, -0.4, 0], dir: 'left' },
-  { id: 'sk-11', name: 'ServiceNow Development',   region: 'Basal Ganglia',        category: 'Enterprise ITSM',     local: [-0.6, -0.3, 0.3], camera: [-2.0, -0.4, 4.6], look: [0, -0.3, 0], dir: 'left' },
-  { id: 'sk-12', name: 'AWS Cloud',                 region: 'Thalamus Sync',         category: 'Cloud Infrastructure', local: [0.6, 0.8, -0.3], camera: [ 1.8, 0.8, 4.8], look: [0, 0.6, 0], dir: 'right' },
-  { id: 'sk-13', name: 'Docker',                   region: 'Cerebellar Hemisphere', category: 'Containerization',    local: [-0.5, 0.8, -0.3], camera: [-1.8, 0.8, 4.8], look: [0, 0.6, 0], dir: 'left' },
-  { id: 'sk-14', name: 'Terraform',                region: 'Superior Sagittal',    category: 'Infrastructure as Code', local: [0.0, 0.9, -0.4], camera: [-1.0, 1.4, 5.0], look: [0, 0.7, 0], dir: 'left' },
-  { id: 'sk-15', name: 'Git & GitHub',             region: 'Occipital Lobe',        category: 'Version Control',     local: [-0.6, 0.1, -0.7], camera: [-2.2, 0.1, 5.0], look: [0, 0.0, 0], dir: 'left' },
-  { id: 'sk-16', name: 'REST APIs',                region: 'Lateral Sulcus',       category: 'Interface Contracts', local: [0.6, 0.1, -0.7], camera: [ 2.2, 0.1, 5.0], look: [0, 0.0, 0], dir: 'right' },
-  { id: 'sk-17', name: 'Three.js & WebGL',         region: 'Occipito-Temporal',    category: '3D Visuals',          local: [0.0, -0.4, -0.8], camera: [ 1.2, -0.5, 5.0], look: [0, -0.3, 0], dir: 'right' },
-  { id: 'sk-18', name: 'System Architecture',     region: 'Brain Stem Matrix',    category: 'Distributed Design',  local: [-0.4, -0.7, -0.5], camera: [-1.6, -0.8, 5.0], look: [0, -0.5, 0], dir: 'left' },
-  { id: 'sk-19', name: 'Performance Optimization',  region: 'Cerebellum Vermis',    category: 'Profiling & Speed',   local: [0.4, -0.7, -0.5], camera: [ 1.6, -0.8, 5.0], look: [0, -0.5, 0], dir: 'right' },
-  { id: 'sk-20', name: 'Problem Solving',          region: 'Frontal Pole Axis',    category: 'Algorithmic Reasoning', local: [0.0, -0.9, -0.2], camera: [ 0.0, -1.2, 5.2], look: [0, -0.7, 0], dir: 'left' },
+  { id: 'sk-1', name: 'Full Stack Development', region: 'Prefrontal Cortex', category: 'Core Architecture', local: [0.0, 0.6, 0.8], camera: [-1.2, 0.4, 4.8], look: [0, 0.4, 0], dir: 'left' },
+  { id: 'sk-2', name: 'Java', region: 'Motor Cortex', category: 'Backend Systems', local: [-0.5, 0.7, 0.5], camera: [-1.8, 0.6, 4.5], look: [0, 0.5, 0], dir: 'left' },
+  { id: 'sk-3', name: 'Python', region: 'Somatosensory Cortex', category: 'Data & AI', local: [0.5, 0.7, 0.4], camera: [1.8, 0.6, 4.5], look: [0, 0.5, 0], dir: 'right' },
+  { id: 'sk-4', name: 'JavaScript', region: 'Broca Area', category: 'Frontend Engine', local: [-0.7, 0.2, 0.5], camera: [-2.0, 0.1, 4.2], look: [0, 0.1, 0], dir: 'left' },
+  { id: 'sk-5', name: 'TypeScript', region: 'Wernicke Area', category: 'Type Systems', local: [0.7, 0.2, 0.4], camera: [2.0, 0.2, 4.2], look: [0, 0.2, 0], dir: 'right' },
+  { id: 'sk-6', name: 'React.js', region: 'Premotor Region', category: 'UI Framework', local: [-0.5, -0.1, 0.7], camera: [-1.8, -0.2, 4.4], look: [0, -0.1, 0], dir: 'left' },
+  { id: 'sk-7', name: 'Next.js', region: 'Auditory Cortex', category: 'SSR & Full-Stack', local: [0.5, -0.1, 0.7], camera: [1.8, -0.2, 4.4], look: [0, -0.1, 0], dir: 'right' },
+  { id: 'sk-8', name: 'HTML5', region: 'Parietal Lobe', category: 'Semantic Markup', local: [-0.6, 0.5, -0.2], camera: [-2.0, 0.4, 4.8], look: [0, 0.2, 0], dir: 'left' },
+  { id: 'sk-9', name: 'CSS3', region: 'Visual Cortex', category: 'Styling & Motion', local: [0.6, 0.5, -0.2], camera: [2.0, 0.4, 4.8], look: [0, 0.2, 0], dir: 'right' },
+  { id: 'sk-10', name: 'SQL', region: 'Hippocampus', category: 'Relational Data', local: [0.0, -0.5, 0.7], camera: [-1.2, -0.6, 4.6], look: [0, -0.4, 0], dir: 'left' },
+  { id: 'sk-11', name: 'ServiceNow Development', region: 'Basal Ganglia', category: 'Enterprise ITSM', local: [-0.6, -0.3, 0.3], camera: [-2.0, -0.4, 4.6], look: [0, -0.3, 0], dir: 'left' },
+  { id: 'sk-12', name: 'AWS Cloud', region: 'Thalamus Sync', category: 'Cloud Infrastructure', local: [0.6, 0.8, -0.3], camera: [1.8, 0.8, 4.8], look: [0, 0.6, 0], dir: 'right' },
+  { id: 'sk-13', name: 'Docker', region: 'Cerebellar Hemisphere', category: 'Containerization', local: [-0.5, 0.8, -0.3], camera: [-1.8, 0.8, 4.8], look: [0, 0.6, 0], dir: 'left' },
+  { id: 'sk-14', name: 'Terraform', region: 'Superior Sagittal', category: 'Infrastructure as Code', local: [0.0, 0.9, -0.4], camera: [-1.0, 1.4, 5.0], look: [0, 0.7, 0], dir: 'left' },
+  { id: 'sk-15', name: 'Git & GitHub', region: 'Occipital Lobe', category: 'Version Control', local: [-0.6, 0.1, -0.7], camera: [-2.2, 0.1, 5.0], look: [0, 0.0, 0], dir: 'left' },
+  { id: 'sk-16', name: 'REST APIs', region: 'Lateral Sulcus', category: 'Interface Contracts', local: [0.6, 0.1, -0.7], camera: [2.2, 0.1, 5.0], look: [0, 0.0, 0], dir: 'right' },
+  { id: 'sk-17', name: 'Three.js & WebGL', region: 'Occipito-Temporal', category: '3D Visuals', local: [0.0, -0.4, -0.8], camera: [1.2, -0.5, 5.0], look: [0, -0.3, 0], dir: 'right' },
+  { id: 'sk-18', name: 'System Architecture', region: 'Brain Stem Matrix', category: 'Distributed Design', local: [-0.4, -0.7, -0.5], camera: [-1.6, -0.8, 5.0], look: [0, -0.5, 0], dir: 'left' },
+  { id: 'sk-19', name: 'Performance Optimization', region: 'Cerebellum Vermis', category: 'Profiling & Speed', local: [0.4, -0.7, -0.5], camera: [1.6, -0.8, 5.0], look: [0, -0.5, 0], dir: 'right' },
+  { id: 'sk-20', name: 'Problem Solving', region: 'Frontal Pole Axis', category: 'Algorithmic Reasoning', local: [0.0, -0.9, -0.2], camera: [0.0, -1.2, 5.2], look: [0, -0.7, 0], dir: 'left' },
 ] as const;
 
 // Global Store for active 2D anchor positions & active skill index
@@ -117,10 +117,10 @@ function LoadingOverlay() {
 function AnchorTracker({ id, position, modelRef }: { id: string; position: readonly number[]; modelRef: React.RefObject<THREE.Group | null> }) {
   const { camera, size } = useThree();
   const objRef = useRef<THREE.Group>(null);
-  
+
   useFrame(() => {
     if (!objRef.current || !modelRef.current) return;
-    
+
     const pos = new THREE.Vector3();
     objRef.current.getWorldPosition(pos);
 
@@ -133,15 +133,15 @@ function AnchorTracker({ id, position, modelRef }: { id: string; position: reado
   });
 
   return (
-    <group ref={objRef} position={position as [number,number,number]}>
-       <mesh>
-         <sphereGeometry args={[0.025, 16, 16]} />
-         <meshBasicMaterial color="#1a1815" depthTest={false} />
-       </mesh>
-       <mesh>
-         <sphereGeometry args={[0.035, 16, 16]} />
-         <meshBasicMaterial color="#e7d5b5" depthTest={false} side={THREE.BackSide} />
-       </mesh>
+    <group ref={objRef} position={position as [number, number, number]}>
+      <mesh>
+        <sphereGeometry args={[0.025, 16, 16]} />
+        <meshBasicMaterial color="#1a1815" depthTest={false} />
+      </mesh>
+      <mesh>
+        <sphereGeometry args={[0.035, 16, 16]} />
+        <meshBasicMaterial color="#e7d5b5" depthTest={false} side={THREE.BackSide} />
+      </mesh>
     </group>
   );
 }
@@ -154,18 +154,18 @@ function AtlasOverlay() {
     <div className="fixed inset-0 pointer-events-none z-40 overflow-hidden max-w-full" id="atlas-overlay">
       <svg className="w-full h-full absolute inset-0">
         {SKILLS_20.map(lbl => (
-           <path key={lbl.id} id={`ann-path-${lbl.id}`} fill="none" stroke="#1a1815" strokeWidth="0.9" className="transition-opacity duration-300 opacity-0" />
+          <path key={lbl.id} id={`ann-path-${lbl.id}`} fill="none" stroke="#1a1815" strokeWidth="0.9" className="transition-opacity duration-300 opacity-0" />
         ))}
       </svg>
       {SKILLS_20.map(lbl => (
-         <div key={lbl.id} id={`ann-text-${lbl.id}`} className="absolute left-0 top-0 flex flex-col items-end text-right gap-0.5 -translate-y-1/2 transition-opacity duration-300 opacity-0 max-w-[260px] sm:max-w-[320px] break-words">
-           <span className="font-mono text-[8px] tracking-[0.3em] text-[#a87d2a] uppercase font-bold">
-             SKILL {lbl.id.replace('sk-', '').padStart(2, '0')} // {lbl.category}
-           </span>
-           <span className="font-serif text-base sm:text-lg font-medium text-[#1a1815] uppercase tracking-tight break-words">
-             {lbl.name}
-           </span>
-         </div>
+        <div key={lbl.id} id={`ann-text-${lbl.id}`} className="absolute left-0 top-0 flex flex-col items-end text-right gap-0.5 -translate-y-1/2 transition-opacity duration-300 opacity-0 max-w-[260px] sm:max-w-[320px] break-words">
+          <span className="font-mono text-[8px] tracking-[0.3em] text-[#a87d2a] uppercase font-bold">
+            SKILL {lbl.id.replace('sk-', '').padStart(2, '0')} // {lbl.category}
+          </span>
+          <span className="font-serif text-base sm:text-lg font-medium text-[#1a1815] uppercase tracking-tight break-words">
+            {lbl.name}
+          </span>
+        </div>
       ))}
     </div>
   );
@@ -237,7 +237,7 @@ function NervousSystemModel() {
         mesh.castShadow = true;
         mesh.receiveShadow = true;
         const mats = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
-        
+
         mats.forEach((m) => {
           if (m instanceof THREE.Material) {
             m.transparent = false;
@@ -378,7 +378,7 @@ function CameraRig() {
         ? 0.5 + (activeSkill.camera[1] || 0) * 0.2
         : (activeSkill.camera[1] || 0) * 0.3 + Math.sin(idx * 0.85) * 0.25;
 
-      const xOffset = isMobile ? 0.0 : 0.6;
+      const xOffset = isMobile ? 0.0 : -0.6;
 
       targetPos.set(
         Math.sin(angle) * radius + xOffset,
@@ -386,7 +386,6 @@ function CameraRig() {
         Math.cos(angle) * radius
       );
       targetLook.set(xOffset, isMobile ? 0.3 : 0.05, 0.0);
-
       // DOM HUD update ONLY on index change
       if (idx !== lastActiveIdx.current) {
         lastActiveIdx.current = idx;
@@ -533,14 +532,14 @@ function SceneContent() {
   return (
     <>
       <ambientLight intensity={1.8} color="#ffffff" />
-      <directionalLight position={[6,10,8]} intensity={2.5} castShadow shadow-mapSize={[2048,2048]} color="#fffaf0" />
-      <directionalLight position={[-6,4,-6]} intensity={1.2} color="#eddcc4" />
-      <directionalLight position={[0,-5,4]} intensity={0.8} color="#dfd0b5" />
+      <directionalLight position={[6, 10, 8]} intensity={2.5} castShadow shadow-mapSize={[2048, 2048]} color="#fffaf0" />
+      <directionalLight position={[-6, 4, -6]} intensity={1.2} color="#eddcc4" />
+      <directionalLight position={[0, -5, 4]} intensity={0.8} color="#dfd0b5" />
       <directionalLight position={[0, 6, -8]} intensity={1.0} color="#ffffff" />
-      <ContactShadows position={[0,-1.6,0]} opacity={0.2} scale={6} blur={2.2} far={4} color="#2a2219" />
+      <ContactShadows position={[0, -1.6, 0]} opacity={0.2} scale={6} blur={2.2} far={4} color="#2a2219" />
 
       {modelStatus === "checking" && <PlaceholderScene reason="checking" />}
-      {modelStatus === "missing"  && <PlaceholderScene reason="missing" />}
+      {modelStatus === "missing" && <PlaceholderScene reason="missing" />}
       {modelStatus === "invalid_format" && <PlaceholderScene reason="invalid_format" />}
 
       {modelStatus === "found" && (
@@ -560,7 +559,7 @@ export default function NeuralCanvas() {
   const isLoaded = useUIStore((s) => s.isLoaded);
   return (
     <>
-      <div className={`fixed inset-0 -z-20 h-screen w-screen transition-opacity duration-1000 ${isLoaded?"opacity-100":"opacity-0"}`}>
+      <div className={`fixed inset-0 -z-20 h-screen w-screen transition-opacity duration-1000 ${isLoaded ? "opacity-100" : "opacity-0"}`}>
         <Canvas
           shadows
           camera={{ position: [-1.2, 0.0, 7.5], fov: 45 }}
@@ -571,7 +570,7 @@ export default function NeuralCanvas() {
           <SceneContent />
         </Canvas>
       </div>
-      
+
       {/* 2D Atlas Overlay for active skill annotation */}
       {isLoaded && <AtlasOverlay />}
     </>
