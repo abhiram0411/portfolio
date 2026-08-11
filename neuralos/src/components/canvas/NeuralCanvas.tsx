@@ -349,10 +349,10 @@ function CameraRig() {
     const { hero, about, skills, projects, certs, edu, contact } = boundsRef.current;
 
     const skillsRectTop = skills.top - scrollY;
-    const skillsRectBottom = skillsRectTop + skills.height;
+    const projectsTop = projects.top - scrollY;
 
-    // SKILL EXPLORATION ACTIVE CONDITION
-    const isSkillsActive = skills.height > 0 && skillsRectTop <= 200 && skillsRectBottom >= viewH * 0.15;
+    // SKILL EXPLORATION ACTIVE CONDITION — Fades out before Projects section enters
+    const isSkillsActive = skills.height > 0 && skillsRectTop <= 200 && projectsTop > viewH * 0.75;
 
     const hudContainer = document.getElementById("skills-hud-container");
 
