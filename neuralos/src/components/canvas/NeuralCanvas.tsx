@@ -151,18 +151,18 @@ function AnchorTracker({ id, position, modelRef }: { id: string; position: reado
 // ─────────────────────────────────────────────────────────────────────────────
 function AtlasOverlay() {
   return (
-    <div className="fixed inset-0 pointer-events-none z-40" id="atlas-overlay">
+    <div className="fixed inset-0 pointer-events-none z-40 overflow-hidden max-w-full" id="atlas-overlay">
       <svg className="w-full h-full absolute inset-0">
         {SKILLS_20.map(lbl => (
            <path key={lbl.id} id={`ann-path-${lbl.id}`} fill="none" stroke="#1a1815" strokeWidth="0.9" className="transition-opacity duration-300 opacity-0" />
         ))}
       </svg>
       {SKILLS_20.map(lbl => (
-         <div key={lbl.id} id={`ann-text-${lbl.id}`} className="absolute left-0 top-0 flex flex-col items-end text-right gap-0.5 -translate-y-1/2 transition-opacity duration-300 opacity-0 whitespace-nowrap">
+         <div key={lbl.id} id={`ann-text-${lbl.id}`} className="absolute left-0 top-0 flex flex-col items-end text-right gap-0.5 -translate-y-1/2 transition-opacity duration-300 opacity-0 max-w-[260px] sm:max-w-[320px] break-words">
            <span className="font-mono text-[8px] tracking-[0.3em] text-[#a87d2a] uppercase font-bold">
              SKILL {lbl.id.replace('sk-', '').padStart(2, '0')} // {lbl.category}
            </span>
-           <span className="font-serif text-lg font-medium text-[#1a1815] uppercase tracking-tight">
+           <span className="font-serif text-base sm:text-lg font-medium text-[#1a1815] uppercase tracking-tight break-words">
              {lbl.name}
            </span>
          </div>
@@ -505,11 +505,10 @@ function CameraRig() {
       path.style.opacity = isMobile ? "0" : "0.85";
       text.style.opacity = isMobile ? "0" : "1";
 
-      // On mobile screens, keep label safely bounded within screen horizontal margins
       const labelRightMargin = isMobile ? 16 : 28;
       const textW = Math.min(text.offsetWidth || 200, viewW - 32);
-      const labelRightEdge = viewW - labelRightMargin;
-      const labelLeftEdge = isMobile ? Math.max(16, labelRightEdge - textW) : labelRightEdge - textW;
+      let labelLeftEdge = viewW - labelRightMargin - textW;
+      labelLeftEdge = Math.max(16, Math.min(viewW - textW - 16, labelLeftEdge));
       const textY = Math.max(isMobile ? 90 : 80, Math.min(data.y, viewH - (isMobile ? 120 : 80)));
 
       // Leader line: brain anchor → midpoint → left edge of label
