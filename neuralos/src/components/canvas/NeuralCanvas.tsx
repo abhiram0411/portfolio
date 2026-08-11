@@ -378,12 +378,14 @@ function CameraRig() {
         ? 0.5 + (activeSkill.camera[1] || 0) * 0.2
         : (activeSkill.camera[1] || 0) * 0.3 + Math.sin(idx * 0.85) * 0.25;
 
+      const xOffset = isMobile ? 0.0 : 0.6;
+
       targetPos.set(
-        Math.sin(angle) * radius,
+        Math.sin(angle) * radius + xOffset,
         yOffset,
         Math.cos(angle) * radius
       );
-      targetLook.set(0.0, isMobile ? 0.3 : 0.05, 0.0);
+      targetLook.set(xOffset, isMobile ? 0.3 : 0.05, 0.0);
 
       // DOM HUD update ONLY on index change
       if (idx !== lastActiveIdx.current) {

@@ -131,58 +131,50 @@ export default function Skills() {
       id="skills"
       className="relative min-h-[500vh] px-4 sm:px-12 lg:px-16 py-16 sm:py-20 pointer-events-none"
     >
-      {/* 3-COLUMN COMPOSITION CONTAINER DURING SKILL EXPLORATION */}
+      {/* Sticky / Fixed HUD aligned to left side during Skill Exploration */}
       <div
         id="skills-hud-container"
         data-active="false"
-        className="fixed inset-x-0 top-20 z-40 px-4 sm:px-12 lg:px-16 pointer-events-none transition-all duration-500 opacity-0 translate-y-4 data-[active=true]:opacity-100 data-[active=true]:translate-y-0"
+        className="fixed top-20 left-4 right-4 z-40 transition-all duration-500 opacity-0 translate-y-4 pointer-events-none data-[active=true]:opacity-100 data-[active=true]:translate-y-0 data-[active=true]:pointer-events-auto md:fixed md:top-28 md:left-12 lg:left-16 md:right-auto md:w-[35vw] lg:w-[30vw] text-left flex flex-col gap-4 sm:gap-6"
       >
-        <div className="w-full max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-6">
-          
-          {/* LEFT COLUMN: Section Heading */}
-          <div className="w-full md:w-[32vw] lg:w-[28vw] pointer-events-auto text-left">
-            <FadeIn>
-              <div className="p-4 sm:p-0 rounded-xl bg-[#f5edde]/80 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none border border-[#1a1815]/15 sm:border-none shadow-sm sm:shadow-none">
-                <h3 className="font-mono text-[9px] sm:text-[10px] tracking-[0.3em] sm:tracking-[0.4em] text-[#6b5e50] uppercase mb-1.5 sm:mb-2">
-                  Cognitive Capabilities
-                </h3>
-                <h2 className="font-serif text-2xl sm:text-4xl font-light text-[#1a1815] uppercase tracking-tight break-words">
-                  Engineering Expertise
-                </h2>
-                <p className="font-serif text-xs sm:text-sm text-[#3a3229]/80 italic mt-1 sm:mt-2">
-                  Scroll through to inspect each skill mapping across the neural atlas.
-                </p>
-              </div>
-            </FadeIn>
-          </div>
-
-          {/* CENTER: 3D Brain space (middle 36% left clear for 3D model) */}
-
-          {/* RIGHT COLUMN: Active Skill HUD Card */}
-          <div className="w-full md:w-[34vw] lg:w-[30vw] pointer-events-auto text-left">
-            <div className="p-5 sm:p-6 rounded-[22px] border border-[#1a1815]/20 bg-[#f5edde]/95 backdrop-blur-md space-y-3 sm:space-y-4 transition-all duration-500 shadow-2xl">
-              <div className="flex justify-between items-center border-b border-[#1a1815]/15 pb-2.5">
-                <span className="font-mono text-xs tracking-[0.25em] text-[#a87d2a] uppercase font-bold" id="hud-category">
-                  CORE ARCHITECTURE
-                </span>
-                <span className="font-mono text-xs tracking-[0.2em] text-[#5a4d3e] font-semibold" id="hud-counter">
-                  01 / 20
-                </span>
-              </div>
-              <div>
-                <h4 className="font-serif text-xl sm:text-2xl font-normal text-[#1a1815] transition-all break-words" id="hud-title">
-                  Full Stack Development
-                </h4>
-                <p className="font-serif text-xs sm:text-sm text-[#3a3229]/90 leading-relaxed pt-2 transition-all" id="hud-detail">
-                  End-to-end web architecture combining scalable React/Next.js frontends with robust Node.js microservices and REST API integrations.
-                </p>
-              </div>
-              <div className="w-full bg-[#1a1815]/15 h-1.5 rounded-full overflow-hidden mt-3">
-                <div className="bg-[#a87d2a] h-full transition-all duration-300 w-[5%]" id="hud-progress" />
-              </div>
+        {/* Desktop Title Header */}
+        <div className="hidden md:block">
+          <FadeIn>
+            <div className="p-4 sm:p-0 rounded-xl bg-[#f5edde]/80 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none border border-[#1a1815]/15 sm:border-none shadow-sm sm:shadow-none">
+              <h3 className="font-mono text-[9px] sm:text-[10px] tracking-[0.3em] sm:tracking-[0.4em] text-[#6b5e50] uppercase mb-1.5 sm:mb-2">
+                Cognitive Capabilities
+              </h3>
+              <h2 className="font-serif text-2xl sm:text-4xl font-light text-[#1a1815] uppercase tracking-tight break-words">
+                Engineering Expertise
+              </h2>
+              <p className="font-serif text-xs sm:text-sm text-[#3a3229]/80 italic mt-1 sm:mt-2">
+                Scroll through to inspect each skill mapping across the neural atlas.
+              </p>
             </div>
-          </div>
+          </FadeIn>
+        </div>
 
+        {/* Dynamic Skill HUD Card */}
+        <div className="p-5 sm:p-6 rounded-[22px] border border-[#1a1815]/20 bg-[#f5edde]/95 backdrop-blur-md space-y-3 sm:space-y-4 transition-all duration-500 shadow-2xl">
+          <div className="flex justify-between items-center border-b border-[#1a1815]/15 pb-2.5">
+            <span className="font-mono text-xs tracking-[0.25em] text-[#a87d2a] uppercase font-bold" id="hud-category">
+              CORE ARCHITECTURE
+            </span>
+            <span className="font-mono text-xs tracking-[0.2em] text-[#5a4d3e] font-semibold" id="hud-counter">
+              01 / 20
+            </span>
+          </div>
+          <div>
+            <h4 className="font-serif text-xl sm:text-2xl font-normal text-[#1a1815] transition-all break-words" id="hud-title">
+              Full Stack Development
+            </h4>
+            <p className="font-serif text-xs sm:text-sm text-[#3a3229]/90 leading-relaxed pt-2 transition-all" id="hud-detail">
+              End-to-end web architecture combining scalable React/Next.js frontends with robust Node.js microservices and REST API integrations.
+            </p>
+          </div>
+          <div className="w-full bg-[#1a1815]/15 h-1.5 rounded-full overflow-hidden mt-3">
+            <div className="bg-[#a87d2a] h-full transition-all duration-300 w-[5%]" id="hud-progress" />
+          </div>
         </div>
       </div>
 
