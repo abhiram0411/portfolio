@@ -180,7 +180,7 @@ export default function Skills() {
         </div>
 
         {/* Dynamic Skill HUD Card */}
-        <div className="p-4 sm:p-6 rounded-[20px] sm:rounded-[22px] border border-[#1a1815]/20 bg-[#f5edde]/95 backdrop-blur-md space-y-2.5 sm:space-y-4 transition-all duration-500 shadow-2xl">
+        <div className="p-4 sm:p-6 rounded-sm border border-[#1a1815]/20 bg-[#f5edde]/95 backdrop-blur-md space-y-2.5 sm:space-y-4 transition-all duration-500 shadow-[4px_4px_0px_rgba(26,24,21,0.15)]">
           <div className="flex justify-between items-center border-b border-[#1a1815]/15 pb-2 gap-2">
             <span className="font-mono text-[10px] sm:text-xs tracking-[0.2em] text-[#a87d2a] uppercase font-bold truncate">
               {currentSkill.category} &bull; {currentSkill.region}
@@ -197,7 +197,7 @@ export default function Skills() {
               {currentSkill.detail}
             </p>
           </div>
-          <div className="w-full bg-[#1a1815]/15 h-1.5 rounded-full overflow-hidden mt-2 sm:mt-3">
+          <div className="w-full bg-[#1a1815]/15 h-0.5 mt-2 sm:mt-3">
             <div className="bg-[#a87d2a] h-full transition-all duration-300" style={{ width: `${progressPercent}%` }} />
           </div>
         </div>

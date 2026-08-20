@@ -44,7 +44,7 @@ export default function Projects() {
         <div className="flex flex-col gap-6 sm:gap-10">
           {projects.map((proj, idx) => (
             <FadeIn key={proj.title} delay={idx * 100}>
-              <div className="p-4 sm:p-6 rounded-xl border border-[#1a1815]/15 bg-[#f5edde]/80 backdrop-blur-md space-y-3 hover:border-[#1a1815]/40 transition-all shadow-sm">
+              <div className="p-4 sm:p-6 rounded-sm border border-[#1a1815]/15 bg-[#f5edde]/80 backdrop-blur-md space-y-3 hover:border-[#a87d2a]/50 hover:-translate-x-px hover:-translate-y-px transition-all shadow-[3px_3px_0px_rgba(26,24,21,0.10)] hover:shadow-[5px_5px_0px_rgba(26,24,21,0.18)]">
                 <div className="flex justify-between items-baseline flex-wrap gap-2">
                   <h3 className="font-serif text-xl sm:text-2xl font-normal text-[#1a1815]">
                     {proj.title}
@@ -70,7 +70,7 @@ export default function Projects() {
                   {proj.tags.map((t) => (
                     <span
                       key={t}
-                      className="font-mono text-[9px] tracking-wider text-[#6b5e50] bg-[#1a1815]/5 px-2 py-0.5 rounded border border-[#1a1815]/10"
+                      className="font-mono text-[9px] tracking-wider text-[#6b5e50] bg-[#1a1815]/5 px-2 py-0.5 rounded-none border border-[#1a1815]/10"
                     >
                       {t}
                     </span>

@@ -76,7 +76,26 @@ body {
 
 .animate-fade-up {
   animation: fade-up 0.8s ease-out forwards;
+}/* ── NeuralOS Bespoke Micro-Interactions ─────────────────────────── */
+
+/* Link underline draws outward from center on hover */
+.link-underline {
+  position: relative;
+  display: inline;
 }
-
-
+.link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  right: 50%;
+  height: 1px;
+  background: currentColor;
+  transition: left 0.35s ease, right 0.35s ease;
+}
+.link-underline:hover::after,
+a:hover .link-underline::after {
+  left: 0;
+  right: 0;
+}
 
