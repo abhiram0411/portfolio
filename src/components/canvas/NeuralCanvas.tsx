@@ -351,8 +351,8 @@ function CameraRig() {
     const skillsRectTop = skills.top - scrollY;
     const projectsTop = projects.top - scrollY;
 
-    // SKILL EXPLORATION ACTIVE CONDITION — Fades out before Projects section enters
-    const isSkillsActive = skills.height > 0 && skillsRectTop <= 200 && projectsTop > viewH * 0.75;
+    // SKILL EXPLORATION ACTIVE CONDITION — Active while inside skills scroll section
+    const isSkillsActive = skills.height > 0 && skillsRectTop <= viewH * 0.5 && projectsTop > viewH * 0.2;
 
     const hudContainer = document.getElementById("skills-hud-container");
 
@@ -368,63 +368,45 @@ function CameraRig() {
 
       annotationStore.activeSkillIndex = idx;
       const activeSkill = SKILLS_20[idx];
+      const [lx, ly, lz] = activeSkill.local;
 
-      // 180-degree horizontal rotation sweep across 20 skills (-80deg to +80deg)
-      const angle = -Math.PI * 0.44 + progress * (Math.PI * 0.88);
-      const radius = isMobile ? 3.4 : 2.8;
+      // 180-degree horizontal rotation sweep across 20 skills (-75deg to +75deg)
+      const sweepAngle = -Math.PI * 0.42 + progress * (Math.PI * 0.84);
 
-      // Dynamic vertical and elevation angle shift per skill
-      const yOffset = isMobile
-        ? 0.5 + (activeSkill.camera[1] || 0) * 0.2
-        : (activeSkill.camera[1] || 0) * 0.3 + Math.sin(idx * 0.85) * 0.25;
+      if (isMobile) {
+        // MOBILE FRAMING: Center horizontally, position in open space below top HUD card
+        const lookX = 0.0;
+        const lookY = -0.38;
+        const radius = 6.8;
 
-      const xOffset = isMobile ? 0.0 : -0.6;
+        const focusY = lookY + ly * 0.12;
 
-      targetPos.set(
-        Math.sin(angle) * radius + xOffset,
-        yOffset,
-        Math.cos(angle) * radius
-      );
-      targetLook.set(xOffset, isMobile ? 0.3 : 0.05, 0.0);
-      // DOM HUD update ONLY on index change
+        targetPos.set(
+          Math.sin(sweepAngle) * radius + lookX + lx * 0.2,
+          focusY,
+          Math.cos(sweepAngle) * radius
+        );
+        targetLook.set(lookX + lx * 0.15, focusY, 0.0);
+      } else {
+        // DESKTOP FRAMING: Position on right side of screen, zoom into skill region part-by-part
+        const lookX = -0.55;
+        const lookY = 0.05;
+        const radius = 4.2;
+
+        const focusY = lookY + ly * 0.22;
+
+        targetPos.set(
+          Math.sin(sweepAngle) * radius + lookX + lx * 0.35,
+          focusY,
+          Math.cos(sweepAngle) * radius + lz * 0.25
+        );
+        targetLook.set(lookX + lx * 0.3, focusY, 0.0);
+      }
+
+      // React state update ONLY on index change
       if (idx !== lastActiveIdx.current) {
         lastActiveIdx.current = idx;
-
-        const catEl = document.getElementById("hud-category");
-        const cntEl = document.getElementById("hud-counter");
-        const ttlEl = document.getElementById("hud-title");
-        const dtlEl = document.getElementById("hud-detail");
-        const prgEl = document.getElementById("hud-progress");
-
-        if (catEl) catEl.textContent = activeSkill.category;
-        if (cntEl) cntEl.textContent = `${String(idx + 1).padStart(2, "0")} / 20`;
-        if (ttlEl) ttlEl.textContent = activeSkill.name;
-        if (dtlEl) {
-          const details: Record<string, string> = {
-            "Full Stack Development": "End-to-end web architecture combining scalable React/Next.js frontends with robust Node.js microservices and REST API integrations.",
-            "Java": "Object-oriented software development, enterprise application logic, multi-threading, memory management, and core data structure implementations.",
-            "Python": "Data processing pipelines, AI model integration, automated testing, scripting, and backend API service development.",
-            "JavaScript": "Modern ES6+ asynchronous programming, DOM manipulation, event-driven architecture, and real-time WebGL rendering.",
-            "TypeScript": "Strict compile-time type safety, complex interface contracts, generic abstractions, and maintainable enterprise codebases.",
-            "React.js": "Declarative component design, custom hook architecture, state management with Zustand, and performant virtual DOM rendering.",
-            "Next.js": "Server-Side Rendering (SSR), Static Site Generation (SSG), App Router, optimized asset delivery, and SEO best practices.",
-            "HTML5": "Accessible, semantic document structure, WCAG compliance, web worker integration, and rich audio/canvas APIs.",
-            "CSS3": "Advanced Flexbox/Grid layouts, CSS custom properties, responsive design systems, smooth keyframe animations, and Tailwind styling.",
-            "SQL": "Relational database schema design, indexing strategies, complex JOIN queries, transaction integrity, and performance tuning.",
-            "ServiceNow Development": "Enterprise ITSM workflows, custom scoped applications, Business Rules, Script Includes, Client Scripts, and Flow Designer automation.",
-            "AWS Cloud": "Cloud infrastructure deployment using EC2 instances, S3 storage buckets, VPC networking, RDS databases, DynamoDB, and ECR repositories.",
-            "Docker": "Containerizing microservices, writing multi-stage Dockerfiles, Docker Compose orchestration, and reproducible runtime environments.",
-            "Terraform": "Declarative cloud provisioning, Infrastructure as Code (IaC), state management, and automated multi-environment setup.",
-            "Git & GitHub": "Branching strategies, interactive rebase workflows, pull-request reviews, merge conflict resolution, and CI/CD version tracking.",
-            "REST APIs": "RESTful API design standards, JSON payload schemas, HTTP status handling, authentication headers, and OpenAPI specification.",
-            "Three.js & WebGL": "3D scene composition, custom shaders, GLTF/GLB model loading, studio lighting setups, raycasting, and camera rigging.",
-            "System Architecture": "Designing decoupled, fault-tolerant, high-throughput software systems with clean separation of concerns.",
-            "Performance Optimization": "Bundle size reduction, code splitting, image optimization, memory leak prevention, and 60fps WebGL rendering speed.",
-            "Problem Solving": "Algorithmic thinking, data structure selection, time and space complexity optimization, and systematic debugging.",
-          };
-          dtlEl.textContent = details[activeSkill.name] || "";
-        }
-        if (prgEl) prgEl.style.width = `${((idx + 1) / 20) * 100}%`;
+        useUIStore.getState().setActiveSkillIndex(idx);
       }
     } else {
       if (hudContainer && hudContainer.getAttribute("data-active") !== "false") {
@@ -452,28 +434,28 @@ function CameraRig() {
 
       if (contactTop < viewH * 0.7) {
         // Contact section (exiting page)
-        targetPos.set(0.0, isMobile ? 0.6 : 0.4, isMobile ? 6.5 : 5.5);
-        targetLook.set(0.0, 0.0, 0.0);
+        targetPos.set(0.0, isMobile ? -0.2 : 0.4, isMobile ? 6.6 : 5.5);
+        targetLook.set(0.0, isMobile ? -0.2 : 0.0, 0.0);
       } else if (eduTop < viewH * 0.7) {
         // Education section
-        targetPos.set(0.0, isMobile ? 0.4 : -0.5, isMobile ? 6.4 : 4.8);
-        targetLook.set(0.0, 0.15, 0.0);
+        targetPos.set(0.0, isMobile ? -0.2 : -0.5, isMobile ? 6.6 : 4.8);
+        targetLook.set(0.0, isMobile ? -0.2 : 0.15, 0.0);
       } else if (certsTop < viewH * 0.7) {
         // Certifications section
-        targetPos.set(isMobile ? 0.0 : -1.2, isMobile ? 0.7 : 1.2, isMobile ? 6.4 : 5.0);
-        targetLook.set(0.0, 0.1, 0.0);
+        targetPos.set(isMobile ? 0.0 : -1.2, isMobile ? -0.2 : 1.2, isMobile ? 6.6 : 5.0);
+        targetLook.set(0.0, isMobile ? -0.2 : 0.1, 0.0);
       } else if (projectsTop < viewH * 0.7) {
         // Projects section
-        targetPos.set(isMobile ? 0.0 : 1.6, isMobile ? 0.6 : 0.4, isMobile ? 6.5 : 5.2);
-        targetLook.set(0.0, 0.0, 0.0);
+        targetPos.set(isMobile ? 0.0 : 1.6, isMobile ? -0.2 : 0.4, isMobile ? 6.6 : 5.2);
+        targetLook.set(0.0, isMobile ? -0.2 : 0.0, 0.0);
       } else if (aboutTop < viewH * 0.7) {
         // About section
-        targetPos.set(isMobile ? 0.0 : -1.4, isMobile ? 0.7 : 0.5, isMobile ? 6.4 : 5.0);
-        targetLook.set(0.0, 0.1, 0.0);
+        targetPos.set(isMobile ? 0.0 : -1.4, isMobile ? -0.2 : 0.5, isMobile ? 6.6 : 5.0);
+        targetLook.set(0.0, isMobile ? -0.2 : 0.1, 0.0);
       } else {
         // Hero opening section
-        targetPos.set(0.0, isMobile ? 0.5 : 0.2, isMobile ? 6.6 : 5.2);
-        targetLook.set(0.0, 0.0, 0.0);
+        targetPos.set(0.0, isMobile ? -0.2 : 0.2, isMobile ? 6.6 : 5.2);
+        targetLook.set(0.0, isMobile ? -0.2 : 0.0, 0.0);
       }
     }
 
