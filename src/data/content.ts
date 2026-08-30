@@ -54,7 +54,7 @@ export const profile = {
   ],
   location: "Hyderabad, Telangana, India",
   contact: {
-    email: "abhiramdasari4033@gmail.com",
+    email: "abhiramdasari0411@gmail.com",
     github: "https://github.com/",
     linkedin: "https://linkedin.com/in/",
   },
