@@ -2,6 +2,9 @@
 
 import { useEffect } from "react";
 import Lenis from "lenis";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 import { useUIStore } from "@/store/useStore";
 import Navbar from "@/components/Navbar";
 import LoadingScreen from "@/components/ui/LoadingScreen";
@@ -20,10 +23,11 @@ export default function Home() {
 
   // Initialize Lenis smooth scroll
   useEffect(() => {
-    if (!isLoaded) return;
+    if (!isLoaded || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const lenis = new Lenis({
-      duration: 1.4,
+      duration: 1.1,
+      anchors: { offset: -96 },
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: "vertical",
       gestureOrientation: "vertical",
@@ -32,23 +36,19 @@ export default function Home() {
       touchMultiplier: 1.5,
     });
 
-    let animationFrameId: number;
-
-    function raf(time: number) {
-      lenis.raf(time);
-      animationFrameId = requestAnimationFrame(raf);
-    }
-
-    animationFrameId = requestAnimationFrame(raf);
-
+    const tick = (time: number) => lenis.raf(time * 1000);
+    lenis.on("scroll", ScrollTrigger.update);
+    gsap.ticker.add(tick);
+    ScrollTrigger.refresh();
     return () => {
-      cancelAnimationFrame(animationFrameId);
+      gsap.ticker.remove(tick);
       lenis.destroy();
     };
   }, [isLoaded]);
 
   return (
     <>
+      <a className="skip-link" href="#main-content">Skip to content</a>
       {/* Loading Screen Gate */}
       <LoadingScreen />
 

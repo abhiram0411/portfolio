@@ -16,14 +16,19 @@ export default function Navbar() {
       }
     };
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    useEffect(() => {
+    const close = (event: KeyboardEvent) => { if (event.key === 'Escape') { setOpen(false); document.querySelector<HTMLButtonElement>('[aria-controls="mobile-navigation"]')?.focus(); } };
+    window.addEventListener('keydown', close);
+    return () => window.removeEventListener('keydown', close);
+  }, []);
+  return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-4 sm:px-12 lg:px-20 py-4 sm:py-6 bg-[#e7d5b5]/85 backdrop-blur-md border-b border-[#1a1815]/10 transition-all duration-300">
       <nav className="flex items-center justify-between" aria-label="Main Navigation">
         <a
-          href="#"
+          href="#hero"
           aria-label="Dasari Abhiram Home"
           className="font-mono text-xs sm:text-xs font-semibold tracking-[0.25em] sm:tracking-[0.3em] text-[#1a1815] uppercase hover:opacity-70 transition-opacity focus:outline-none focus:ring-1 focus:ring-[#1a1815]"
           onClick={() => setOpen(false)}
@@ -58,6 +63,7 @@ export default function Navbar() {
           type="button"
           aria-label="Toggle Navigation Menu"
           aria-expanded={open}
+          aria-controls="mobile-navigation"
           className="flex flex-col justify-center items-center w-9 h-9 p-2 rounded-md bg-[#1a1815]/5 border border-[#1a1815]/15 md:hidden focus:outline-none focus:ring-1 focus:ring-[#1a1815] active:scale-95 transition-transform"
           onClick={() => setOpen((prev) => !prev)}
         >
@@ -83,7 +89,7 @@ export default function Navbar() {
 
       {/* Mobile Drawer Menu */}
       {open && (
-        <div className="mt-3 pt-4 border-t border-[#1a1815]/15 md:hidden bg-[#e7d5b5]/95 backdrop-blur-xl rounded-b-2xl p-4 shadow-xl border border-[#1a1815]/10 animate-fade-up">
+        <div id="mobile-navigation" className="mt-3 pt-4 border-t border-[#1a1815]/15 md:hidden bg-[#e7d5b5]/95 backdrop-blur-xl rounded-b-2xl p-4 shadow-xl border border-[#1a1815]/10 animate-fade-up">
           <ul className="flex flex-col gap-1.5">
             {navLinks.map((link, idx) => {
               const isSectionActive = activeSection === link.href.substring(1);

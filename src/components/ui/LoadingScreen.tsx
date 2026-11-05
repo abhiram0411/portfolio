@@ -15,7 +15,7 @@ const CATALOG_LOGS = [
 export default function LoadingScreen() {
   const setLoaded = useUIStore((state) => state.setLoaded);
   const [progress, setProgress] = useState(0);
-  const [logIndex, setLogIndex] = useState(0);
+  const logIndex = Math.min(CATALOG_LOGS.length - 1, Math.floor(progress / 100 * CATALOG_LOGS.length));
   const [isFading, setIsFading] = useState(false);
 
   useEffect(() => {
@@ -34,25 +34,11 @@ export default function LoadingScreen() {
   }, []);
 
   useEffect(() => {
-    const expectedLogIndex = Math.min(
-      CATALOG_LOGS.length - 1,
-      Math.floor((progress / 100) * CATALOG_LOGS.length)
-    );
-    if (expectedLogIndex > logIndex) {
-      setLogIndex(expectedLogIndex);
-    }
-
-    if (progress === 100) {
-      const timeout = setTimeout(() => {
-        setIsFading(true);
-        const exitTimeout = setTimeout(() => {
-          setLoaded(true);
-        }, 800);
-        return () => clearTimeout(exitTimeout);
-      }, 500);
-      return () => clearTimeout(timeout);
-    }
-  }, [progress, logIndex, setLoaded]);
+    if (progress !== 100) return;
+    const fade = setTimeout(() => setIsFading(true), 150);
+    const exit = setTimeout(() => setLoaded(true), 650);
+    return () => { clearTimeout(fade); clearTimeout(exit); };
+  }, [progress, setLoaded]);
 
   return (
     <div

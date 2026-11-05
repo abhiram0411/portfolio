@@ -99,3 +99,27 @@ a:hover .link-underline::after {
   right: 0;
 }
 
+
+/* Exhibition typography and interaction system */
+body { isolation:isolate; }
+section[id] { scroll-margin-top:96px; }
+:focus-visible { outline:2px solid #76521c; outline-offset:5px; }
+.skip-link { position:fixed;top:8px;left:16px;z-index:10000;padding:12px 20px;background:#1a1815;color:#f5edde;transform:translateY(-150%); }
+.skip-link:focus {transform:none;}
+.eyebrow {font-family:var(--font-geist-mono),monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#65533e;}
+.hero-name {font-family:Georgia,serif;font-size:clamp(3rem,5.5vw,6rem);font-weight:400;letter-spacing:-.065em;line-height:.98;max-width:8.5ch;margin:0 0 32px;}
+.hero-role {font-family:Georgia,serif;font-size:clamp(1.5rem,2.3vw,2.25rem);line-height:1.25;letter-spacing:-.025em;}
+.hero-role em {font-weight:400;color:#785d36;}
+.hero-description {max-width:36ch;margin:24px 0 30px;font-size:14px;line-height:1.85;color:#5b4b38;}
+.hero-actions {display:flex;align-items:center;gap:24px;flex-wrap:wrap;font-size:12px;}
+.primary-link {background:#29251f;color:#f5edde;padding:16px 20px;display:inline-flex;gap:25px;transition:background .2s,transform .2s;}
+.primary-link:hover {background:#654b27;transform:translateY(-2px);}
+.secondary-link {padding:12px 0;border-bottom:1px solid #877453;display:inline-flex;gap:16px;}
+.hero-meta {margin-top:40px;padding-top:18px;border-top:1px solid #3a32292b;display:flex;flex-wrap:wrap;gap:16px;font-family:var(--font-geist-mono),monospace;font-size:9px;letter-spacing:.09em;text-transform:uppercase;color:#65533e;}
+.scroll-note {position:absolute;bottom:24px;left:4rem;font-family:var(--font-geist-mono),monospace;font-size:9px;letter-spacing:.2em;display:flex;gap:24px;align-items:center;}
+#projects h2,#about h2,#education h2,#certifications h2,#contact h2 {letter-spacing:-.035em;line-height:1.1;}
+#projects p {font-size:13px;line-height:1.8;}
+@media(max-width:767px){.hero-copy{padding:28px 22px;background:rgba(245,237,222,.9);border:1px solid #3a32292b;}.hero-name{font-size:clamp(2.8rem,11vw,5rem);}.hero-description{font-size:13px;}.scroll-note{left:24px;}.hero-meta{margin-top:28px;}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important;}}
+
+:root { --font-geist-sans: Arial, Helvetica, sans-serif; --font-geist-mono: "Courier New", monospace; }
