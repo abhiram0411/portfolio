@@ -56,7 +56,7 @@ export default function LoadingScreen() {
         </h1>
 
         <div className="mt-6 font-mono text-2xl font-light text-[#1a1815]">
-          {progress}%
+          <span className="tabular-nums">{progress}</span><span className="ml-1 text-xs align-baseline text-[#6b5e50]">%</span>
         </div>
 
         {/* Minimal ink line progress bar */}

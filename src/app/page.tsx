@@ -59,7 +59,7 @@ export default function Home() {
       {isLoaded && <Navbar />}
 
       {/* Scrollable DOM Sections */}
-      <main
+      <main id="main-content"
         className={`relative overflow-x-clip min-h-screen transition-opacity duration-1000 ${
           isLoaded ? "opacity-100" : "opacity-0"
         }`}
